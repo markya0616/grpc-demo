@@ -1,6 +1,8 @@
 syntax = "proto3";
 package pb;
 
+import "google/api/annotations.proto";
+
 message GetBlockReq {
   int64 number = 1;
 }
@@ -18,6 +20,15 @@ message SubscribeBlockRsp {
 }
 
 service BlockService {
-  rpc GetBlock(GetBlockReq) returns (GetBlockRsp) {}
-  rpc SubscribeBlock(SubscribeBlockReq) returns (stream SubscribeBlockRsp) {}
+  rpc GetBlock(GetBlockReq) returns (GetBlockRsp) {
+    option (google.api.http) = {
+      get: "/v1/blocks/{number}"
+    };
+  }
+  rpc SubscribeBlock(SubscribeBlockReq) returns (stream SubscribeBlockRsp) {
+    option (google.api.http) = {
+      post: "/v1/subscribe"
+      body: "*"
+    };
+  }
 }
