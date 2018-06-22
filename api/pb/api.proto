@@ -1,0 +1,23 @@
+syntax = "proto3";
+package pb;
+
+message GetBlockReq {
+  int64 number = 1;
+}
+
+message GetBlockRsp {
+  string block = 1;
+}
+
+message SubscribeBlockReq {
+  int64 number = 1;
+}
+
+message SubscribeBlockRsp {
+  string block = 1;
+}
+
+service BlockService {
+  rpc GetBlock(GetBlockReq) returns (GetBlockRsp) {}
+  rpc SubscribeBlock(SubscribeBlockReq) returns (stream SubscribeBlockRsp) {}
+}
